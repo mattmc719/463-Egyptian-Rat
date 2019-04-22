@@ -42,18 +42,36 @@ def menu:
 
 
 def play:
-    #use clocks
+
     second #records second card
     third #records third card
-    if stack.append()==deck.endswith('j') ##jack condition
 
-    if stack.append()==deck.endswith('q') ##jack condition ##queen condition
-
-    if stack.append()==deck.endswith('k') ##jack condition ##king, three times
-
-    if stack.append()==deck.endswith('a') ##jack condition ##aces, four times
-
+    stack.append(player.pop())
+    if stack[0]==deck.endswith('j') ##jack, once
+    if stack[0]==deck.endswith('q') ##queen, twice
+    if stack[0]==deck.endswith('k') ##king, three times
+    if stack[0]==deck.endswith('a') ##aces, four times
     #slap function goes here and check for these conditions.
-    if stack.append()==##pairs
+    if stack[0].endswith()==second.endswith()
 
     ##sandwiches
+    if stack[0].endswith()==third.endswith()
+
+
+    #This apparently to confirm that these are empty
+    if player and cpu1 and cpu2:
+        print("CPU3 wins.")
+        end()
+    if player and cpu1 and cpu3:
+        print("CPU2 wins.")
+        end()
+    if player and cpu2 and cpu3:
+        print("CPU1 wins.")
+        end()
+    if cpu1 and cpu2 and cpu3:
+        print("You win.")
+        end()
+ def end:
+        print("Do you wanna play again?")
+
+        play()
