@@ -38,20 +38,22 @@ def main:
     cpu3=collections.deque()
     stack=collections.deque()
 
-def game:
-    gamestate=1
-    while gamestate=1:
-        stack.append(player.pop())
-
-        time.sleep(2)
-        stack.append(cpu1.pop())
-
-        time.sleep(2)
-        stack.append(cpu2.pop())
-        
-        time.sleep(2)
-        stack.append(cpu3.pop())
+def menu:
 
 
+def play:
+    #use clocks
+    second #records second card
+    third #records third card
+    if stack.append()==deck.endswith('j') ##jack condition
 
-}
+    if stack.append()==deck.endswith('q') ##jack condition ##queen condition
+
+    if stack.append()==deck.endswith('k') ##jack condition ##king, three times
+
+    if stack.append()==deck.endswith('a') ##jack condition ##aces, four times
+
+    #slap function goes here and check for these conditions.
+    if stack.append()==##pairs
+
+    ##sandwiches
