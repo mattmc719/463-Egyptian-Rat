@@ -6,6 +6,9 @@ import random
 ##TODO: Player is unable to play another face card, CPU/Player that played a face card before them gets the pile.
 ##TODO: Player plays face card; CPU is unable to produce a face card the the player receives the pile.
 ##TODO: Player tries to play cards when its not their turn.
+##TODO: Game pauses (disables buttons) while CPU is taking turn
+##TODO: CPU waits a random amount of time between 1 and 5 seconds before slapping. CPU checks if it is a valid slap condition
+##      before slapping and only one randomly selected CPU will try to slap
 
 def main:
     deck= ["ca", "sa", "ha", "da",
