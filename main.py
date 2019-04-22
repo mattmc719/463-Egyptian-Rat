@@ -1,11 +1,11 @@
 import random
 
-#TODO: Player runs out of cards but they can still slap in, even if they slap incorrectly.
-#TODO: Player removes two card from their pile for incorrectly slapping to bottom of stack.
-#TODO: Player correctly slaps and gets all the cards in the pile.
-#TODO: Player is unable to play another face card, CPU/Player that played a face card before them gets the pile.
-#TODO: Player plays face card; CPU is unable to produce a face card the the player receives the pile.
-#TODO: Player tries to play cards when its not their turn.
+##TODO: Player runs out of cards but they can still slap in, even if they slap incorrectly.
+##TODO: Player removes two card from their pile for incorrectly slapping to bottom of stack.
+##TODO: Player correctly slaps and gets all the cards in the pile.
+##TODO: Player is unable to play another face card, CPU/Player that played a face card before them gets the pile.
+##TODO: Player plays face card; CPU is unable to produce a face card the the player receives the pile.
+##TODO: Player tries to play cards when its not their turn.
 
 def main:
     deck= ["ca", "sa", "ha", "da",
