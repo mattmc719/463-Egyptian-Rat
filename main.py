@@ -1,4 +1,7 @@
 import random
+import collections
+import time
+
 
 ##TODO: Player runs out of cards but they can still slap in, even if they slap incorrectly.
 ##TODO: Player removes two card from their pile for incorrectly slapping to bottom of stack.
@@ -29,13 +32,26 @@ def main:
     random.shuffle(deck)
     random.shuffle(deck)
 
-    player=
-    cpu1=
-    cpu2=
-    cpu3=
-    stack=
+    player=collections.deque()
+    cpu1=collections.deque()
+    cpu2=collections.deque()
+    cpu3=collections.deque()
+    stack=collections.deque()
 
 def game:
+    gamestate=1
+    while gamestate=1:
+        stack.append(player.pop())
+
+        time.sleep(2)
+        stack.append(cpu1.pop())
+
+        time.sleep(2)
+        stack.append(cpu2.pop())
+        
+        time.sleep(2)
+        stack.append(cpu3.pop())
+
 
 
 }
