@@ -39,6 +39,16 @@ def main:
     cpu2=collections.deque()
     cpu3=collections.deque()
     stack=collections.deque()
+    
+     for i in deck[0:12]: #deal cards
+        player.append(i)
+    for i in deck[13:25]: #deal cards
+        cpu1.append(i)
+    for i in deck[26:38]: #deal cards
+        cpu2.append(i)
+    for i in deck[39:51]: #deal cards
+        cpu3.append(i)
+    
 
 def menu:
 
@@ -49,10 +59,10 @@ def play:
     third #records third card
 
     stack.append(player.pop())
-    if stack[0]==deck.endswith('j') ##jack, once
-    if stack[0]==deck.endswith('q') ##queen, twice
-    if stack[0]==deck.endswith('k') ##king, three times
-    if stack[0]==deck.endswith('a') ##aces, four times
+    if stack[0].endswith('j') ##jack, once
+    if stack[0].endswith('q') ##queen, twice
+    if stack[0].endswith('k') ##king, three times
+    if stack[0].endswith('a') ##aces, four times
     #slap function goes here and check for these conditions.
     if stack[0].endswith()==second.endswith()
 
