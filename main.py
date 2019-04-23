@@ -71,7 +71,10 @@ def play:
     if cpu1 and cpu2 and cpu3:
         print("You win.")
         end()
- def end:
-        print("Do you wanna play again?")
-
-        play()
+def end:
+        choice=input("Do you wanna play again?(y/n)")
+        input=="y" or input=="Y":
+            play()
+        #no
+        else:
+            exit()
