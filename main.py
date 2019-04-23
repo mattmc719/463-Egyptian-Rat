@@ -3,6 +3,8 @@ import collections
 import time
 
 
+##First Priority: Get the game interface and basics to work.
+
 ##TODO: Player runs out of cards but they can still slap in, even if they slap incorrectly.
 ##TODO: Player removes two card from their pile for incorrectly slapping to bottom of stack.
 ##TODO: Player correctly slaps and gets all the cards in the pile.
