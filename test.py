@@ -23,8 +23,8 @@ display_height = 500
 display_width = 800
 win = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Egyptian Rat Screw')
-cardBack = pygame.image.load('card.png')
-cardFront = pygame.image.load('card front.png')
+#cardBack = pygame.image.load('card.png')
+#cardFront = pygame.image.load('card front.png')
 
 def textObject(text,font):
         textSurface = font.render(text,True,(255,255,255))
@@ -39,17 +39,36 @@ def welcomeDisplay():
     titleText.center = ((display_width/2), (display_height/2 - 200))
     win.blit(titleSurf,titleText)
 
-    win.blit(cardBack,(350,display_height / 2 - 100))
+    #win.blit(cardBack,(350,display_height / 2 - 100))
 
     instructText.center = ((display_width/2), (display_height/2 + 150))
     win.blit(instructSurf,instructText)
 
     pygame.display.update()
 
+# button function to create buttons with specified properties and a
+# function when clicked within the bounds
+def button(x,y,width,height,color,hoverColor, function):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
 
+    if x + width > mouse[0] > x and y + height  > mouse[1] > y:
+        pygame.draw.rect(win, hoverColor,(x,y,width,height))
+
+        if click[0] == 1:
+            function()
+    else:
+        pygame.draw.rect(win, color,(x,y,width,height))
+
+
+
+
+
+# home screen
 def main():
+    win.fill((0,0,0))
     welcomeDisplay()
-    
+
     run = True
     while run:
         pygame.time.delay(100)
@@ -57,35 +76,17 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        pygame.draw.rect(win,(255,0,0), (200,150,100,140))
-        mouse = pygame.mouse.get_pos()
-        print(mouse)
+        button(350,150,100,150,(128,128,0), (0,128,0), game)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             run = False
         pygame.display.update()
 
-    '''
-
-        mouse = pygame.mouse.get_pos()
-
-        x = 220
-        y = 320
-        height = 110
-        width =  80
-        if  x + height > mouse[0] > x and width + y > mouse[1] > y:
-            pygame.draw.rect(win,(128,128,0), (x,y,width,height))
-        else:
-            pygame.draw.rect(win,(0,128,0), (x,y,width,height))
-
-        if keys[pygame.K_UP]:
-            print("UP")
-    '''
-
+# game screen
 def game():
     win.fill((255,255,255))
-    print("GAME LOOP")
+
     run = True
     while run:
         pygame.time.delay(100)
@@ -93,19 +94,34 @@ def game():
             if event.type == pygame.QUIT:
                 run = False
 
-        pygame.draw.rect(win,(255,0,0), (200,150,100,140))
-        mouse = pygame.mouse.get_pos()
-        print(mouse)
+
+        button(350,150,100,150,(128,128,0), (0,128,0), end)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             run = False
         pygame.display.update()
 
+# end game
+def end():
+    win.fill((0,0,0))
+
+    run = True
+    while run:
+        pygame.time.delay(100)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+
+        button(350,150,100,150,(128,128,0), (0,128,0), main)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            run = False
+        pygame.display.update()
 
 #function calls
 main()
-game()
-over()
 pygame.quit()
 quit()
