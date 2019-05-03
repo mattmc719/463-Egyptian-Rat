@@ -19,8 +19,10 @@ deck = ["ca", "sa", "ha", "da",
 random.shuffle(deck)
 
 #setup code
-display_height = 500
-display_width = 800
+display_height = 1000
+display_width = 1000
+cardHeight = 200
+cardWidth = 140
 win = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Egyptian Rat Screw')
 #cardBack = pygame.image.load('card.png')
@@ -30,21 +32,34 @@ def textObject(text,font):
         textSurface = font.render(text,True,(255,255,255))
         return textSurface, textSurface.get_rect()
 
+def displayText(x,y,text,size):
+
+    font = pygame.font.Font('freesansbold.ttf',size)
+    textSurf, textText = textObject(text,font)
+    textText.center = (x,y)
+    win.blit(textSurf,textText)
+
+    pygame.display.update()
+
+
 def welcomeDisplay():
-    titleFont = pygame.font.Font('freesansbold.ttf',30)
-    instructFont = pygame.font.Font('freesansbold.ttf',20)
+    titleFont = pygame.font.Font('freesansbold.ttf',60)
+    instructFont = pygame.font.Font('freesansbold.ttf',40)
     titleSurf, titleText = textObject("Egyptian Rat Screw",titleFont)
     instructSurf, instructText = textObject("How To Play",instructFont)
 
-    titleText.center = ((display_width/2), (display_height/2 - 200))
+    titleText.center = ((display_width/2), (display_height/2 - 400))
     win.blit(titleSurf,titleText)
 
-    #win.blit(cardBack,(350,display_height / 2 - 100))
 
-    instructText.center = ((display_width/2), (display_height/2 + 150))
+    instructText.center = ((display_width/2), (display_height/2 + 350))
     win.blit(instructSurf,instructText)
 
     pygame.display.update()
+
+#def playArea():
+
+
 
 # button function to create buttons with specified properties and a
 # function when clicked within the bounds
@@ -75,8 +90,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-
-        button(350,150,100,150,(128,128,0), (0,128,0), game)
+        #start
+        button(display_width / 2 - 50, display_height / 2 - 75, cardWidth,cardHeight,(128,128,0), (0,128,0), game)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
@@ -85,8 +100,7 @@ def main():
 
 # game screen
 def game():
-    win.fill((255,255,255))
-
+    win.fill((0,0,0))
     run = True
     while run:
         pygame.time.delay(100)
@@ -94,8 +108,24 @@ def game():
             if event.type == pygame.QUIT:
                 run = False
 
+        #player
+        button(display_width / 2 - 50, display_height / 2 + 250, cardWidth,cardHeight,(0,0,255), (0,128,0), game)
+        displayText(650,780,"Player",30)
 
-        button(350,150,100,150,(128,128,0), (0,128,0), end)
+        #cpu2
+        button(display_width / 2 - 50, display_height / 2 - 400, cardWidth,cardHeight,(255,0,0), (0,128,0), game)
+        displayText(650,120,"CPU 2",30)
+
+        #middle pile
+        button(display_width / 2 - 50, display_height / 2 - 70, cardWidth,cardHeight,(255,255,255), (0,128,0), game)
+
+        #cpu1
+        button(display_width / 2 - 400, display_height / 2 - 70, cardWidth,cardHeight,(0,255,0), (0,128,0), game)
+        displayText(900,650,"CPU 3",30)
+
+        #cpu3
+        button(display_width / 2 + 300, display_height / 2 - 70, cardWidth,cardHeight,(128,128,128), (0,128,0), game)
+        displayText(150,650,"CPU 4",30)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
@@ -122,6 +152,6 @@ def end():
         pygame.display.update()
 
 #function calls
-main()
+game()
 pygame.quit()
 quit()
