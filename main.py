@@ -15,7 +15,7 @@ import time
 ##TODO: CPU waits a random amount of time between 1 and 5 seconds before slapping. CPU checks if it is a valid slap condition
 ##      before slapping and only one randomly selected CPU will try to slap
 
-def main:
+def main():
     deck= ["ca", "sa", "ha", "da",
               "c1", "s1", "h1", "d1",
               "c2", "s2", "h2", "d2",
@@ -48,42 +48,107 @@ def main:
         cpu2.append(i)
     for i in deck[39:51]: #deal cards
         cpu3.append(i)
-    
 
-def menu:
-
-
-def play:
-
+def play():
+    game=0
     second #records second card
     third #records third card
-
-    stack.append(player.pop())
+    while game=0:
+        turn=0
+        second #records second card
+        third #records third card
+        
+        if turn%4=0:
+            if player:
+                stack.append=player.pop
+            else:
+                turn+=1
+        if turn%4=1:
+            if cpu1:
+                stack.append=cpu1.pop
+            else:
+                turn+=1
+        if turn%4=2:
+            if cpu2:
+                stack.append=cpu2.pop
+            else:
+                turn+=1
+        if turn%4=3:
+            if cpu3:
+                stack.append=cpu3.pop
+            else:
+                turn+=1
+        turn+=1
+        
+        #popping stuff
+        if stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+            face(stack[0],turn)
+       
+        if not player and cpu1 and cpu2:
+            print("CPU3 wins.")
+            end()
+        if not player and cpu1 and cpu3:
+            print("CPU2 wins.")
+            end()
+        if not player and cpu2 and cpu3:
+            print("CPU1 wins.")
+            end()
+        if not cpu1 and cpu2 and cpu3:
+            print("You win.")
+            end()
+            
+def face(stack,turn):
     if stack[0].endswith('j') ##jack, once
-    if stack[0].endswith('q') ##queen, twice
-    if stack[0].endswith('k') ##king, three times
-    if stack[0].endswith('a') ##aces, four times
-    #slap function goes here and check for these conditions.
-    if stack[0].endswith()==second.endswith()
-
-    ##sandwiches
-    if stack[0].endswith()==third.endswith()
-
-
-    #This apparently to confirm that these are empty
-    if player and cpu1 and cpu2:
-        print("CPU3 wins.")
-        end()
-    if player and cpu1 and cpu3:
-        print("CPU2 wins.")
-        end()
-    if player and cpu2 and cpu3:
-        print("CPU1 wins.")
-        end()
-    if cpu1 and cpu2 and cpu3:
-        print("You win.")
-        end()
-def end:
+        if turn%4=0:
+            if player:
+                player.pop
+                if stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+                    face(stack[0])
+            else:
+                turn+=1
+         if turn%4=1:
+            if cpu1:
+                cpu1.pop
+            else:
+                turn+=1
+          if turn%4=2:
+             if cpu2:
+                cpu2.pop
+             else:
+                turn+=1
+          if turn%4=3:
+             if cpu3:
+                cpu3.pop
+             else:
+                turn+=1
+          if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+            #append everything to one who put down face card.
+            turn-=1
+            return             
+     if stack[0].endswith('q') ##queen, twice
+    
+           if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+            #append everything to one who put down face card.
+            turn-=1
+            return
+     if stack[0].endswith('k') ##king, three times
+           if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+            #append everything to one who put down face card.
+            turn-=1  
+            return
+     if stack[0].endswith('a') ##aces, four times
+           if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+            #append everything to one who put down face card.
+            turn-=1
+            return
+def slap():        
+        #slap function goes here and check for these conditions.
+        if stack[0].endswith()==second.endswith()
+        ##sandwiches
+        if stack[0].endswith()==third.endswith()
+        #This apparently to confirm that these are empty
+            
+def end():
         choice=input("Do you wanna play again?(y/n)")
         input=="y" or input=="Y":
             play()
