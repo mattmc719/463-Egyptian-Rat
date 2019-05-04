@@ -2,6 +2,7 @@
 
 Team Members:
 Cirjeffrey Baldomero
+Brian Nguyen
 
 How to Play (4 players)
 
