@@ -94,7 +94,7 @@ def play():
 
         #facetime
         if stack[0].endswith('j') or stack[0].endswith('q') or  stack[0].endswith('k') or stack[0].endswith('a'):
-            face(stack[0],turn)
+            face(player,cpu1,cpu2,cpu3,stack,second,third,turn)
 
         if not player and cpu1 and cpu2:
             print("CPU3 wins.")
@@ -109,8 +109,8 @@ def play():
             print("You win.")
             end()
 
-def face(stack,turn):
-    original=turn
+def face(player,cpu1,cpu2,cpu3,stack,second,third,original):
+    turn=original
     if stack[0].endswith('j'):
         x=1
     if stack[0].endswith('q'):
@@ -126,10 +126,11 @@ def face(stack,turn):
                 stack.append(player.popleft())
                 slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
                 x-=1
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    original+=1
+                    face(player,cpu1,cpu2,cpu3,stack,second,third,original)
                 if not stack:
                     return
-                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
-                    face(stack[0],turn+1)
             else:
                 turn+=1
 
@@ -138,10 +139,11 @@ def face(stack,turn):
                 stack.append(cpu1.popleft())
                 slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
                 x-=1
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    original += 1
+                    face(player, cpu1, cpu2, cpu3, stack, second, third, original)
                 if not stack:
                     return
-                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
-                    face(stack[0],turn+1)
             else:
                 turn+=1
 
@@ -150,10 +152,11 @@ def face(stack,turn):
                 stack.append(cpu2.popleft())
                 slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
                 x-=1
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    original += 1
+                    face(player, cpu1, cpu2, cpu3, stack, second, third, original)
                 if not stack:
                     return
-                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
-                    face(stack[0],turn+1)
              else:
                 turn+=1
 
@@ -162,10 +165,11 @@ def face(stack,turn):
                 stack.append(cpu3.popleft())
                 slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
                 x-=1
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    original += 1
+                    face(player, cpu1, cpu2, cpu3, stack, second, third, original)
                 if not stack:
                     return
-                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
-                    face(stack[0],turn+1)
              else:
                 turn+=1
 
@@ -174,28 +178,32 @@ def face(stack,turn):
             if original%4==0:
                 while stack:
                     player.append(stack.popleft())
-                    time.sleep(2)
 
             if original%4==1:
                 while stack:
                     cpu1.append(stack.popleft())
-                    time.sleep(2)
 
             if original%4==2:
                 while stack:
                     cpu2.append(stack.popleft())
-                    time.sleep(2)
 
             if original%4==3:
                 while stack:
                     cpu3.append(stack.popleft())
-                    time.sleep(2)
+            second = none
+            third = none
+            time.sleep(2)
 
 def slap(player,cpu1,cpu2,cpu3,stack,second,third,turn):
-
+        if stack[0].endswith()==second.endswith() or stack[0].endswith()==third.endswith():
+            t = Timer(3.0, print, ["Too slow."] )
+        else:
+            t = Timer(3.0, print, ["Continue."])
+        t.start()
         #slap function goes here and check for these conditions.
         #button for player here
         if stack[0].endswith()==second.endswith() or stack[0].endswith()==third.endswith():
+            print("You got the stack.")
             while stack:
                 player.append(stack.popleft())
             while turn%4!=0:
@@ -203,6 +211,8 @@ def slap(player,cpu1,cpu2,cpu3,stack,second,third,turn):
         #failure...
         else:
             stack.appendleft(player.pop())
+            print("Dingus.")
+        t.cancel()
 
         #after input
         if stack[0].endswith()==second.endswith() or stack[0].endswith()==third.endswith():
@@ -210,21 +220,26 @@ def slap(player,cpu1,cpu2,cpu3,stack,second,third,turn):
             if chance <4:
                 steal=randint(1,3)
                 if steal==1:
+                    print("CPU1 got the stack.")
                     while stack:
                         cpu1.append(stack.popleft())
                         while turn%4!=1:
                             turn+=1
                 if steal==2:
+                    print("CPU2 got the stack.")
                     while stack:
                         cpu2.append(stack.popleft())
                         while turn%4!=2:
                             turn+=1
                 if steal==3:
+                    print("CPU3 got the stack.")
                     while stack:
                         cpu3.append(stack.popleft())
                         while turn%4!=3:
                             turn+=1
-
+            second = none
+            third = none
+        time.sleep(2)
 
             
 def end():
@@ -234,4 +249,3 @@ def end():
         #no
         else:
             exit()
-
