@@ -1,6 +1,8 @@
 import random
 import collections
 import time
+import threading
+from random import randint
 
 
 ##First Priority: Get the game interface and basics to work.
@@ -15,7 +17,10 @@ import time
 ##TODO: CPU waits a random amount of time between 1 and 5 seconds before slapping. CPU checks if it is a valid slap condition
 ##      before slapping and only one randomly selected CPU will try to slap
 
-def main():
+def menu():
+    #menu stuff goes here
+
+def shuffle(player,cpu1,cpu2,cpu3):
     deck= ["ca", "sa", "ha", "da",
               "c1", "s1", "h1", "d1",
               "c2", "s2", "h2", "d2",
@@ -33,14 +38,8 @@ def main():
 
     random.shuffle(deck)
     random.shuffle(deck)
-
-    player=collections.deque()
-    cpu1=collections.deque()
-    cpu2=collections.deque()
-    cpu3=collections.deque()
-    stack=collections.deque()
     
-     for i in deck[0:12]: #deal cards
+    for i in deck[0:12]: #deal cards
         player.append(i)
     for i in deck[13:25]: #deal cards
         cpu1.append(i)
@@ -50,40 +49,53 @@ def main():
         cpu3.append(i)
 
 def play():
+    player = collections.deque()
+    cpu1 = collections.deque()
+    cpu2 = collections.deque()
+    cpu3 = collections.deque()
+    stack = collections.deque()
+    shuffle(player,cpu1,cpu2,cpu3)
     game=0
     second #records second card
     third #records third card
-    while game=0:
+    while game==0:
         turn=0
         second #records second card
         third #records third card
-        
-        if turn%4=0:
+
+        if stack.count() > 1:
+            second = stack()
+
+        if stack.count() > 2:
+            third = second
+
+        if turn%4==0:
             if player:
-                stack.append=player.pop
+                stack.append(player.popleft())
             else:
                 turn+=1
-        if turn%4=1:
+        if turn%4==1:
             if cpu1:
-                stack.append=cpu1.pop
+                stack.append(cpu1.popleft())
             else:
                 turn+=1
-        if turn%4=2:
+        if turn%4==2:
             if cpu2:
-                stack.append=cpu2.pop
+                stack.append(cpu2.popleft())
             else:
                 turn+=1
-        if turn%4=3:
+        if turn%4==3:
             if cpu3:
-                stack.append=cpu3.pop
+                stack.append(cpu3.popleft())
             else:
                 turn+=1
-        turn+=1
-        
-        #popping stuff
-        if stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+
+        slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
+
+        #facetime
+        if stack[0].endswith('j') or stack[0].endswith('q') or  stack[0].endswith('k') or stack[0].endswith('a'):
             face(stack[0],turn)
-       
+
         if not player and cpu1 and cpu2:
             print("CPU3 wins.")
             end()
@@ -96,62 +108,130 @@ def play():
         if not cpu1 and cpu2 and cpu3:
             print("You win.")
             end()
-            
+
 def face(stack,turn):
-    if stack[0].endswith('j') ##jack, once
-        if turn%4=0:
+    original=turn
+    if stack[0].endswith('j'):
+        x=1
+    if stack[0].endswith('q'):
+        x=2
+    if stack[0].endswith('k'):
+        x=3
+    if stack[0].endswith('a'):
+        x=4
+
+    if turn%4==0:
+        while x>0:
             if player:
-                player.pop
-                if stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
-                    face(stack[0])
+                stack.append(player.popleft())
+                slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
+                x-=1
+                if not stack:
+                    return
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    face(stack[0],turn+1)
             else:
                 turn+=1
-         if turn%4=1:
+
+        if turn%4==1:
             if cpu1:
-                cpu1.pop
+                stack.append(cpu1.popleft())
+                slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
+                x-=1
+                if not stack:
+                    return
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    face(stack[0],turn+1)
             else:
                 turn+=1
-          if turn%4=2:
+
+        if turn%4==2:
              if cpu2:
-                cpu2.pop
+                stack.append(cpu2.popleft())
+                slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
+                x-=1
+                if not stack:
+                    return
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    face(stack[0],turn+1)
              else:
                 turn+=1
-          if turn%4=3:
+
+        if turn%4==3:
              if cpu3:
-                cpu3.pop
+                stack.append(cpu3.popleft())
+                slap(player,cpu1,cpu2,cpu3,stack,second,third,turn)
+                x-=1
+                if not stack:
+                    return
+                if stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
+                    face(stack[0],turn+1)
              else:
                 turn+=1
-          if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
+
+        if not stack[0].endswith('j') or stack[0].endswith('q') or stack[0].endswith('k') or stack[0].endswith('a'):
             #append everything to one who put down face card.
-            turn-=1
-            return             
-     if stack[0].endswith('q') ##queen, twice
-    
-           if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
-            #append everything to one who put down face card.
-            turn-=1
-            return
-     if stack[0].endswith('k') ##king, three times
-           if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
-            #append everything to one who put down face card.
-            turn-=1  
-            return
-     if stack[0].endswith('a') ##aces, four times
-           if not stack[0].endswith('j') or if stack[0].endswith('q') or if stack[0].endswith('k') or if stack[0].endswith('a'):
-            #append everything to one who put down face card.
-            turn-=1
-            return
-def slap():        
+            if original%4==0:
+                while stack:
+                    player.append(stack.popleft())
+                    time.sleep(2)
+
+            if original%4==1:
+                while stack:
+                    cpu1.append(stack.popleft())
+                    time.sleep(2)
+
+            if original%4==2:
+                while stack:
+                    cpu2.append(stack.popleft())
+                    time.sleep(2)
+
+            if original%4==3:
+                while stack:
+                    cpu3.append(stack.popleft())
+                    time.sleep(2)
+
+def slap(player,cpu1,cpu2,cpu3,stack,second,third,turn):
+
         #slap function goes here and check for these conditions.
-        if stack[0].endswith()==second.endswith()
-        ##sandwiches
-        if stack[0].endswith()==third.endswith()
-        #This apparently to confirm that these are empty
+        #button for player here
+        if stack[0].endswith()==second.endswith() or stack[0].endswith()==third.endswith():
+            while stack:
+                player.append(stack.popleft())
+            while turn%4!=0:
+                turn+=1
+        #failure...
+        else:
+            stack.appendleft(player.pop())
+
+        #after input
+        if stack[0].endswith()==second.endswith() or stack[0].endswith()==third.endswith():
+            chance=randint(0,9)
+            if chance <4:
+                steal=randint(1,3)
+                if steal==1:
+                    while stack:
+                        cpu1.append(stack.popleft())
+                        while turn%4!=1:
+                            turn+=1
+                if steal==2:
+                    while stack:
+                        cpu2.append(stack.popleft())
+                        while turn%4!=2:
+                            turn+=1
+                if steal==3:
+                    while stack:
+                        cpu3.append(stack.popleft())
+                        while turn%4!=3:
+                            turn+=1
+
+
             
 def end():
         choice=input("Do you wanna play again?(y/n)")
-        input=="y" or input=="Y":
+        if choice=="y" or choice=="Y":
             play()
         #no
         else:
             exit()
+
