@@ -249,3 +249,5 @@ def end():
         #no
         else:
             exit()
+
+main()
