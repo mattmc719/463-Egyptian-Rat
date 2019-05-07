@@ -45,38 +45,44 @@ def play():
         player.append(i)
     for i in deck[13:25]:  # deal cards
         cpu1.append(i)
-    for i in deck[26:38]:  # deal cards
-        cpu2.append(i)
-    for i in deck[39:51]:  # deal cards
-        cpu3.append(i)
+    #for i in deck[26:38]:  # deal cards
+    #    cpu2.append(i)
+    #for i in deck[39:51]:  # deal cards
+    #    cpu3.append(i)
     game = 0
     turn = 0
     while game == 0:
+        card=0
         print("\n",len(player),"\n",len(cpu1),"\n",len(cpu2),"\n",len(cpu3))
-        if turn % 4 == 0:
-            if player:
-                print("Player plays: ",player[0])
-                stack.append(player.popleft())
-            else:
-                turn += 1
-        if turn % 4 == 1:
-            if cpu1:
-                print("CPU1 plays: ", cpu1[0])
-                stack.append(cpu1.popleft())
-            else:
-                turn += 1
-        if turn % 4 == 2:
-            if cpu2:
-                print("CPU2 plays: ", cpu2[0])
-                stack.append(cpu2.popleft())
-            else:
-                turn += 1
-        if turn % 4 == 3:
-            if cpu3:
-                print("CPU3 plays: ", cpu3[0])
-                stack.append(cpu3.popleft())
-            else:
-                turn += 1
+        while(card==0):
+            if turn % 4 == 0:
+                if player:
+                    print("Player plays: ",player[0])
+                    stack.append(player.popleft())
+                    card=1
+                else:
+                    turn += 1
+            if turn % 4 == 1:
+                if cpu1:
+                    print("CPU1 plays: ", cpu1[0])
+                    stack.append(cpu1.popleft())
+                    card=1
+                else:
+                    turn += 1
+            if turn % 4 == 2:
+                if cpu2:
+                    print("CPU2 plays: ", cpu2[0])
+                    stack.append(cpu2.popleft())
+                    card=1
+                else:
+                    turn += 1
+            if turn % 4 == 3:
+                if cpu3:
+                    print("CPU3 plays: ", cpu3[0])
+                    stack.append(cpu3.popleft())
+                    card=1
+                else:
+                    turn += 1
 
         turn=slap(player, cpu1, cpu2, cpu3, stack, turn)
         if len(stack)==0:
@@ -117,73 +123,91 @@ def face(player, cpu1, cpu2, cpu3, stack, original):
         print("An ace has been played, set four: ")
         x = 4
 
-    if turn % 4 == 0:
-        while x > 0:
-            if player:
-                print("Player places: ", player[0])
-                stack.append(player.popleft())
-                original=slap(player, cpu1, cpu2, cpu3, stack, original)
-                if len(stack) == 0:
-                    return original
-                x-=1
-                if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
-                    original=turn
-                    original=face(player, cpu1, cpu2, cpu3, stack, original)
-                    return original
-            else:
-                turn += 1
-                continue
+    card=0
+    while (card==0):
+        if turn % 4 == 0:
+            while x > 0:
+                if player:
+                    print("Player places: ", player[0])
+                    stack.append(player.popleft())
+                    original=slap(player, cpu1, cpu2, cpu3, stack, original)
+                    if len(stack) == 0:
+                        return original
+                    x-=1
+                    if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
+                        original=turn
+                        original=face(player, cpu1, cpu2, cpu3, stack, original)
+                        return original
+                else:
+                    turn += 1
+                    break
 
-    if turn % 4 == 1:
-        while x > 0:
-            if cpu1:
-                print("CPU1 places: ", cpu1[0])
-                stack.append(cpu1.popleft())
-                original=slap(player, cpu1, cpu2, cpu3, stack, original)
-                if len(stack)==0:
-                    return original
-                x-=1
-                if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
-                    original = turn
-                    original = face(player, cpu1, cpu2, cpu3, stack, original)
-                    return original
-            else:
-                turn += 1
-                continue
+        if turn % 4 == 1:
+            while x > 0:
+                if cpu1:
+                    print("CPU1 places: ", cpu1[0])
+                    stack.append(cpu1.popleft())
+                    original=slap(player, cpu1, cpu2, cpu3, stack, original)
+                    if len(stack)==0:
+                        return original
+                    x-=1
+                    if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
+                        original = turn
+                        original = face(player, cpu1, cpu2, cpu3, stack, original)
+                        return original
+                else:
+                    turn += 1
+                    break
 
-    if turn % 4 == 2:
-        while x > 0:
-            if cpu2:
-                print("CPU2 places: ", cpu2[0])
-                stack.append(cpu2.popleft())
-                original=slap(player, cpu1, cpu2, cpu3, stack,original)
-                if len(stack)==0:
-                    return original
-                x-=1
-                if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
-                    original = turn
-                    original = face(player, cpu1, cpu2, cpu3, stack, original)
-                    return original
-            else:
-                turn += 1
-                continue
+        if turn % 4 == 2:
+            while x > 0:
+                if cpu2:
+                    print("CPU2 places: ", cpu2[0])
+                    stack.append(cpu2.popleft())
+                    original=slap(player, cpu1, cpu2, cpu3, stack,original)
+                    if len(stack)==0:
+                        return original
+                    x-=1
+                    if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
+                        original = turn
+                        original = face(player, cpu1, cpu2, cpu3, stack, original)
+                        return original
+                else:
+                    turn += 1
+                    break
 
-    if turn % 4 == 3:
-        while x >  0:
-            if cpu3:
-                print("CPU3 places: ", cpu3[0])
-                stack.append(cpu3.popleft())
-                original=slap(player, cpu1, cpu2, cpu3, stack, original)
-                if len(stack)==0:
-                    return original
-                x -= 1
-                if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
-                    original = turn
-                    original = face(player, cpu1, cpu2, cpu3, stack, original)
-                    return original
-            else:
-                turn += 1
-                continue
+        if turn % 4 == 3:
+            while x >  0:
+                if cpu3:
+                    print("CPU3 places: ", cpu3[0])
+                    stack.append(cpu3.popleft())
+                    original=slap(player, cpu1, cpu2, cpu3, stack, original)
+                    if len(stack)==0:
+                        return original
+                    x -= 1
+                    if stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
+                        original = turn
+                        original = face(player, cpu1, cpu2, cpu3, stack, original)
+                        return original
+                else:
+                    turn += 1
+                    break
+        if not player and not cpu1 and not cpu2:
+            print("CPU3 wins.")
+            end()
+        if not player and not cpu1 and not cpu3:
+            print("CPU2 wins.")
+            end()
+        if not player and not cpu2 and not cpu3:
+            print("CPU1 wins.")
+            end()
+        if not cpu1 and not cpu2 and not cpu3:
+            print("You win.")
+            end()
+        if x==0:
+            card=1
+
+
 
     if not stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
         # append everything to one who put down face card.
@@ -213,13 +237,7 @@ def face(player, cpu1, cpu2, cpu3, stack, original):
 def slap(player, cpu1, cpu2, cpu3, stack, turn):
     if not stack:
         return
-    if len(stack) > 1 :
-        t = Timer(3.0, print, ["Continue."])
-    elif len(stack) > 2:
-        if stack[-1][1] == stack[-2][1] or stack[-1][1] == stack[-3][1]:
-            t = Timer(3.0, print, ["Too slow."])
-    else:
-        t = Timer(3.0, print, ["Continue."])
+    t = Timer(3.0, print, ["Continue."])
 
     t.start()
     print("Stack: ", stack)
@@ -243,6 +261,7 @@ def slap(player, cpu1, cpu2, cpu3, stack, turn):
                     while turn % 4 != 0:
                         turn += 1
                 print(turn % 4)
+                t.cancel()
                 return turn
             else:
                 print("Dipshit. You lost cards: ")
@@ -262,6 +281,7 @@ def slap(player, cpu1, cpu2, cpu3, stack, turn):
                     while turn % 4 != 0:
                         turn += 1
                 print(turn % 4)
+                t.cancel()
                 return turn
             else:
                 print("Dipshit. You lost cards: ")
