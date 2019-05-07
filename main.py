@@ -84,16 +84,6 @@ def play():
                 else:
                     turn += 1
 
-        turn=slap(player, cpu1, cpu2, cpu3, stack, turn)
-        if len(stack)==0:
-            print("New stack.")
-        elif stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
-            turn = face(player, cpu1, cpu2, cpu3, stack, turn)
-        if len(stack) !=0:
-            turn += 1
-
-        print("Priority: ", turn%4)
-        # facetime
         if not player and not cpu1 and not cpu2:
             print("CPU3 wins.")
             end()
@@ -106,6 +96,17 @@ def play():
         if not cpu1 and not cpu2 and not cpu3:
             print("You win.")
             end()
+        
+        turn=slap(player, cpu1, cpu2, cpu3, stack, turn)
+        if len(stack)==0:
+            print("New stack.")
+        elif stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
+            turn = face(player, cpu1, cpu2, cpu3, stack, turn)
+        if len(stack) !=0:
+            turn += 1
+
+        print("Priority: ", turn%4)
+        # facetime
 
 def face(player, cpu1, cpu2, cpu3, stack, original):
     turn = original+1
