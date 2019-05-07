@@ -45,10 +45,10 @@ def play():
         player.append(i)
     for i in deck[13:25]:  # deal cards
         cpu1.append(i)
-    #for i in deck[26:38]:  # deal cards
-    #    cpu2.append(i)
-    #for i in deck[39:51]:  # deal cards
-    #    cpu3.append(i)
+    for i in deck[26:38]:  # deal cards
+        cpu2.append(i)
+    for i in deck[39:51]:  # deal cards
+        cpu3.append(i)
     game = 0
     turn = 0
     while game == 0:
