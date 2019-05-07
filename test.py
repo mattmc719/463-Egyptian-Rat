@@ -1,7 +1,7 @@
 import pygame
 import random
+import hello
 pygame.init()
-
 #setup code
 deck = ["ca", "sa", "ha", "da",
         "c1", "s1", 'h1','d1',
@@ -18,7 +18,6 @@ deck = ["ca", "sa", "ha", "da",
         "cj", "sj", 'hj','dj',
         "ck", "sk", 'hk','dk']
 
-# image sources
 deckImg = ["PNG/AC.png","PNG/2C.png","PNG/3C.png","PNG/4C.png","PNG/5C.png","PNG/6C.png",
             "PNG/7C.png","PNG/8C.png","PNG/9C.png","PNG/10C.png","PNG/JC.png","PNG/QC.png",
             "PNG/KC.png",
@@ -41,9 +40,6 @@ win = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Egyptian Rat Screw')
 
 # shuffle and display top of deck. rotozoom used to resize png
-random.shuffle(deckImg)
-cardBack = pygame.image.load(deckImg[0])
-cardBack = pygame.transform.rotozoom(cardBack, 0, .3)
 
 #function used to create text. args are desired text and fontsize
 def textObject(text,font):
@@ -130,10 +126,10 @@ def endGame(outcome):
 
 # generates a random card to display
 def genCard():
-
     random.shuffle(deckImg)
     cardBack = pygame.image.load(deckImg[0])
     cardBack = pygame.transform.rotozoom(cardBack, 0, .3)
+    print(deckImg[0][4])
     win.blit(cardBack, (200,200))
 
 
@@ -197,9 +193,27 @@ def end():
             run = False
         pygame.display.update()
 
+def test1():
+    win.fill((0,0,0))
+    run = True
+    while run:
+        pygame.time.delay(100)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        button(display_height / 2 - 50,display_width / 2 - 75,cardWidth,cardHeight,(128,128,0), (0,128,0), genCard)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            run = False
+        pygame.display.update()
 
 
 #function calls
 main()
+game()
+end()
+
 pygame.quit()
 quit()
