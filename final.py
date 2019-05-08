@@ -28,6 +28,8 @@ cardHeight = 100
 cardWidth = 70
 win = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Egyptian Rat Screw')
+turn =0
+
 # Deque setup
 
 player = collections.deque()
@@ -78,7 +80,6 @@ def welcomeDisplay():
 
 # create initial play area
 def playArea():
-    start = 0
     #player
     displayCard(display_width / 2 - 75 , display_height/2 + 200,  player[0])
     displayText(530,670,"Player",35)
@@ -115,7 +116,8 @@ def playArea():
     displayCard(display_width / 2 - 350 , display_height/2 - 100,  cpu3[0])
     displayText(700,300,"CPU 3",35)
     displayText(700,335,"12",35)
-    order(start)
+    pygame.display.update()
+
 
 
 # win/lose Screen
@@ -138,13 +140,7 @@ def endGame(outcome):
 
     pygame.display.update()
 
-# generates a random card to display
-def genCard():
-    random.shuffle(deckImg)
-    cardBack = pygame.image.load(deckImg[0])
-    cardBack = pygame.transform.rotozoom(cardBack, 0, .3)
-    print(deckImg[0][4])
-    win.blit(cardBack, (200,200))
+
 
 def displayCard(x,y,card):
     if card == 0:
@@ -236,7 +232,6 @@ def main():
 def game():
     win.fill((0,0,0))
     run = True
-
     while run:
         pygame.time.delay(100)
         for event in pygame.event.get():
@@ -244,15 +239,87 @@ def game():
                 run = False
 
         playArea()
+        #order(start)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            addCard(player)
-            print(stack)
-
+            slapCheck()
+        if keys[pygame.K_LEFT]:
+            addCard(cpu3)
+        if keys[pygame.K_RIGHT]:
+            addCard(cpu1)
         if keys[pygame.K_DOWN]:
             run = False
         pygame.display.update()
 
+def testGame():
+
+    game = 0
+    turn = 0
+    while game == 0:
+        playArea()
+
+
+        card=0
+        print("\n",len(player),"\n",len(cpu1),"\n",len(cpu2),"\n",len(cpu3))
+        while(card==0):
+            if turn % 4 == 0:
+                if player:
+                    print("Player plays: ",player[0])
+                    stack.append(player.popleft())
+                    playArea()
+                    card=1
+                else:
+                    turn += 1
+            if turn % 4 == 1:
+                if cpu1:
+                    print("CPU1 plays: ", cpu1[0])
+                    stack.append(cpu1.popleft())
+                    playArea()
+                    card=1
+                else:
+                    turn += 1
+            if turn % 4 == 2:
+                if cpu2:
+                    print("CPU2 plays: ", cpu2[0])
+                    stack.append(cpu2.popleft())
+                    playArea()
+                    card=1
+                else:
+                    turn += 1
+            if turn % 4 == 3:
+                if cpu3:
+                    print("CPU3 plays: ", cpu3[0])
+                    stack.append(cpu3.popleft())
+                    playArea()
+                    card=1
+                else:
+                    playArea()
+                    turn += 1
+
+
+        if not player and not cpu1 and not cpu2:
+            print("CPU3 wins.")
+            end()
+        if not player and not cpu1 and not cpu3:
+            print("CPU2 wins.")
+            end()
+        if not player and not cpu2 and not cpu3:
+            print("CPU1 wins.")
+            end()
+        if not cpu1 and not cpu2 and not cpu3:
+            print("You win.")
+            end()
+        turn=slap(player, cpu1, cpu2, cpu3, stack, turn)
+        if len(stack)==0:
+            print("New stack.")
+        elif stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
+            turn = face(player, cpu1, cpu2, cpu3, stack, turn)
+        if len(stack) !=0:
+            turn += 1
+
+        print("Priority: ", turn%4)
+        pygame.display.update()
+        # facetime
 
 # end game
 '''
@@ -277,16 +344,16 @@ def end():
 def face(player, cpu1, cpu2, cpu3, stack, original):
     turn = original+1
 
-    if stack[-1][1]=='j':
+    if stack[-1][4]=='J':
         print("A jack has been played, set one: ")
         x = 1
-    if stack[-1][1]=='q':
+    if stack[-1][4]=='Q':
         print("A queen has been played, set two: ")
         x = 2
-    if stack[-1][1]=='k':
+    if stack[-1][4]=='K':
         print("A king has been played, set three: ")
         x = 3
-    if stack[-1][1]=='a':
+    if stack[-1][4]=='A':
         print("An ace has been played, set four: ")
         x = 4
 
@@ -400,6 +467,58 @@ def face(player, cpu1, cpu2, cpu3, stack, original):
         return original
         time.sleep(2)
 
+def slapCheck():
+    if len(stack) <= 1:
+        print("Dipshit. There is only one card.... well not anymore.\n You lost cards: ")
+        if player:
+            print(player[-1])
+            stack.appendleft(player.pop())
+        if player:
+            print(player[-1])
+            stack.appendleft(player.pop())
+        if not player:
+            print("Stop losing cards!")
+    elif len(stack) == 2:
+        if stack[-1][1] == stack[-2][1]:
+            print("You got the stack.")
+            while stack:
+                player.append(stack.popleft())
+                while turn % 4 != 0:
+                    turn += 1
+            print(turn % 4)
+            t.cancel()
+            return turn
+        else:
+            print("Dipshit. You lost cards: ")
+            if player:
+                print(player[-1])
+                stack.appendleft(player.pop())
+            if player:
+                print(player[-1])
+                stack.appendleft(player.pop())
+            if not player:
+                print("Stop losing cards!")
+    elif len(stack) >= 2:
+        if stack[-1][1] == stack[-2][1] or stack[-1][1]==stack[-3][1]:
+            print("You got the stack.")
+            while stack:
+                player.append(stack.popleft())
+                while turn % 4 != 0:
+                    turn += 1
+            print(turn % 4)
+            t.cancel()
+            return turn
+        else:
+            print("Dipshit. You lost cards: ")
+            if player:
+                print(player[-1])
+                stack.appendleft(player.pop())
+            if player:
+                print(player[-1])
+                stack.appendleft(player.pop())
+            if not player:
+                print("Stop losing cards!")
+
 
 def slap(player, cpu1, cpu2, cpu3, stack, turn):
     if not stack:
@@ -502,7 +621,6 @@ def end():
 
 
 #function calls
-main()
 game()
 
 pygame.quit()
