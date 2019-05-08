@@ -81,7 +81,11 @@ def welcomeDisplay():
 # create initial play area
 def playArea():
     #player
-    displayCard(display_width / 2 - 75 , display_height/2 + 200,  player[0])
+    if player:
+        displayCard(display_width / 2 - 75 , display_height/2 + 200,  player[0])
+    else:
+        displayCard(display_width / 2 - 75, display_height / 2 + 200, 0)
+        
     displayText(530,670,"Player",35)
     displayText(530,705,"12",35)
 
@@ -130,7 +134,6 @@ def playArea():
     displayText(700,300,"CPU 3",35)
     displayText(700,335,"12",35)
     pygame.display.update()
-
 
 
 # win/lose Screen
@@ -481,6 +484,9 @@ def face(player, cpu1, cpu2, cpu3, stack, original):
         time.sleep(2)
 
 def slapCheck():
+    turn=0
+    t = Timer(3.0, print, ["Continue."])
+    t.start()
     if len(stack) <= 1:
         print("Dipshit. There is only one card.... well not anymore.\n You lost cards: ")
         if player:
@@ -492,7 +498,7 @@ def slapCheck():
         if not player:
             print("Stop losing cards!")
     elif len(stack) == 2:
-        if stack[-1][1] == stack[-2][1]:
+        if stack[-1][4] == stack[-2][4]:
             print("You got the stack.")
             while stack:
                 player.append(stack.popleft())
@@ -512,7 +518,7 @@ def slapCheck():
             if not player:
                 print("Stop losing cards!")
     elif len(stack) >= 2:
-        if stack[-1][1] == stack[-2][1] or stack[-1][1]==stack[-3][1]:
+        if stack[-1][4] == stack[-2][4] or stack[-1][4]==stack[-3][4]:
             print("You got the stack.")
             while stack:
                 player.append(stack.popleft())
@@ -531,7 +537,6 @@ def slapCheck():
                 stack.appendleft(player.pop())
             if not player:
                 print("Stop losing cards!")
-
 
 def slap(player, cpu1, cpu2, cpu3, stack, turn):
     if not stack:
