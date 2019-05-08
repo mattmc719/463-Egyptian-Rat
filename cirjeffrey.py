@@ -459,60 +459,6 @@ def face(player, cpu1, cpu2, cpu3, stack, original):
         return original
         time.sleep(2)
 
-def slapCheck():
-    turn = 0
-    t = Timer(3.0, print, ["Continue."])
-
-    if len(stack) <= 1:
-        print("Dipshit. There is only one card.... well not anymore.\n You lost cards: ")
-        if player:
-            print(player[-1])
-            stack.appendleft(player.pop())
-        if player:
-            print(player[-1])
-            stack.appendleft(player.pop())
-        if not player:
-            print("Stop losing cards!")
-    elif len(stack) == 2:
-        if stack[-1][1] == stack[-2][1]:
-            print("You got the stack.")
-            while stack:
-                player.append(stack.popleft())
-                while turn % 4 != 0:
-                    turn += 1
-            print(turn % 4)
-            t.cancel()
-            return turn
-        else:
-            print("Dipshit. You lost cards: ")
-            if player:
-                print(player[-1])
-                stack.appendleft(player.pop())
-            if player:
-                print(player[-1])
-                stack.appendleft(player.pop())
-            if not player:
-                print("Stop losing cards!")
-    elif len(stack) >= 2:
-        if stack[-1][1] == stack[-2][1] or stack[-1][1]==stack[-3][1]:
-            print("You got the stack.")
-            while stack:
-                player.append(stack.popleft())
-                while turn % 4 != 0:
-                    turn += 1
-            print(turn % 4)
-            t.cancel()
-            return turn
-        else:
-            print("Dipshit. You lost cards: ")
-            if player:
-                print(player[-1])
-                stack.appendleft(player.pop())
-            if player:
-                print(player[-1])
-                stack.appendleft(player.pop())
-            if not player:
-                print("Stop losing cards!")
 
 def slap(player, cpu1, cpu2, cpu3, stack, turn):
     if not stack:
@@ -534,7 +480,7 @@ def slap(player, cpu1, cpu2, cpu3, stack, turn):
             if not player:
                 print("Stop losing cards!")
         elif len(stack) == 2:
-            if stack[-1][1] == stack[-2][1]:
+            if stack[-1][4] == stack[-2][4]:
                 print("You got the stack.")
                 while stack:
                     player.append(stack.popleft())
@@ -554,7 +500,7 @@ def slap(player, cpu1, cpu2, cpu3, stack, turn):
                 if not player:
                     print("Stop losing cards!")
         elif len(stack) >= 2:
-            if stack[-1][1] == stack[-2][1] or stack[-1][1]==stack[-3][1]:
+            if stack[-1][4] == stack[-2][4] or stack[-1][4] == stack[-3][4]:
                 print("You got the stack.")
                 while stack:
                     player.append(stack.popleft())
@@ -581,7 +527,7 @@ def slap(player, cpu1, cpu2, cpu3, stack, turn):
 
     # after input
     if len(stack)>2:
-        if stack[-1][1] == stack[-2][1] or stack[-1][1] == stack[-3][1]:
+        if stack[-1][4] == stack[-2][4] or stack[-1][4] == stack[-3][4]:
              steal = randint(1, 3)
              if steal == 1:
                 print("CPU1 slapped the stack.", stack)
