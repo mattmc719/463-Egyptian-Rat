@@ -203,8 +203,8 @@ def game():
         playArea()
         #order(start)
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            slapCheck()
+        #if keys[pygame.K_UP]:
+            #slapCheck()
         if keys[pygame.K_LEFT]:
             addCard(cpu3)
         if keys[pygame.K_RIGHT]:
@@ -214,44 +214,56 @@ def game():
         pygame.display.update()
 
 def testGame():
+    keys = pygame.key.get_pressed()
     game = 0
     turn = 0
     while game == 0:
         playArea()
         card=0
+        run=True
         print("\n",len(player),"\n",len(cpu1),"\n",len(cpu2),"\n",len(cpu3))
-        while(card==0):
-            if turn % 4 == 0:
-                if player:
-                    addCard(player)
-                    playArea()
-                    card=1
-                else:
-                    turn += 1
-            if turn % 4 == 1:
-                if cpu1:
-                    addCard(cpu1)
-                    playArea()
-                    card=1
-                else:
-                    turn += 1
-            if turn % 4 == 2:
-                if cpu2:
-                    addCard(cpu2)
-                    playArea()
-                    card=1
-                else:
-                    turn += 1
-            if turn % 4 == 3:
-                if cpu3:
-                    addCard(cpu3)
-                    playArea()
-                    card=1
-                else:
-                    playArea()
-                    turn += 1
+        while run:
+            while(card==0):
+                if turn % 4 == 0:
+                    if player:
+                        x = True
+                        while x:
+                            if keys[pygame.K_UP]:
+                                addCard(player)
+                                x = False
+                            pygame.display.update()
+                        playArea()
+                        card=1
+                    else:
+                        turn += 1
+                if turn % 4 == 1:
+                    if cpu1:
+                        addCard(cpu1)
+                        playArea()
+                        card=1
+                    else:
+                        turn += 1
+                if turn % 4 == 2:
+                    if cpu2:
+                        addCard(cpu2)
+                        playArea()
+                        card=1
+                    else:
+                        turn += 1
+                if turn % 4 == 3:
+                    if cpu3:
+                        addCard(cpu3)
+                        playArea()
+                        card=1
+                    else:
+                        playArea()
+                        turn += 1
 
-
+            if keys[pygame.K_DOWN]:
+                slapCheck()
+                run=False
+            if keys[pygame.K_RIGHT]:
+                run=False
         if not player and not cpu1 and not cpu2:
             print("CPU3 wins.")
             end()
@@ -265,14 +277,14 @@ def testGame():
             print("You win.")
             end()
 
-        turn=slapCheck()
+
 
         if len(stack)==0:
             print("New stack.")
         elif stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
             turn = face(player, cpu1, cpu2, cpu3, stack, turn)
         if len(stack) !=0:
-            turn += 1
+            turn  += int(1)
 
         print("Priority: ", turn%4)
         pygame.display.update()
@@ -400,7 +412,7 @@ def face(player, cpu1, cpu2, cpu3, stack, original):
 
 
 
-    if not stack[-1][1]=='j' or stack[-1][1]=='q' or stack[-1][1]=='k' or stack[-1][1]=='a':
+    if not stack[-1][4]=='j' or stack[-1][4]=='q' or stack[-1][4]=='k' or stack[-1][4]=='a':
         # append everything to one who put down face card.
         if original % 4 == 0:
             print("You won the stack.", stack)
