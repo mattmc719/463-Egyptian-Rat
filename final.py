@@ -86,7 +86,11 @@ def playArea():
     displayText(530,705,"12",35)
 
     #cpu2
-    displayCard(display_width / 2 - 75 , display_height/2 - 400,  cpu2[0])
+    if cpu2:
+        displayCard(display_width / 2 - 75 , display_height/2 - 400,  cpu2[0])
+    else:
+        displayCard(display_width / 2 - 75 , display_height/2 - 400,  0)
+
     displayText(530,65,"CPU 2",35)
     displayText(530,100,"12",35)
 
@@ -107,13 +111,22 @@ def playArea():
         displayCard(display_width / 2 - 75 , display_height/2 - 100, stack[len(stack) - 3])
         displayCard(display_width / 2 - 50 , display_height/2 - 100, stack[len(stack) - 2])
         displayCard(display_width / 2 - 25 , display_height/2 - 100, stack[len(stack)- 1])
+
     #cpu1
-    displayCard(display_width / 2 + 200 , display_height/2 - 100,  cpu1[0])
+    if cpu1:
+        displayCard(display_width / 2 + 200 , display_height/2 - 100,  cpu1[0])
+    else:
+        displayCard(display_width / 2 + 200 , display_height/2 - 100,  0)
+
     displayText(100,300,"CPU 1",35)
     displayText(100,335,"12",35)
 
     #cpu3
-    displayCard(display_width / 2 - 350 , display_height/2 - 100,  cpu3[0])
+    if cpu3:
+        displayCard(display_width / 2 - 350 , display_height/2 - 100,  cpu3[0])
+    else:
+        displayCard(display_width / 2 - 350 , display_height/2 - 100,  0)
+
     displayText(700,300,"CPU 3",35)
     displayText(700,335,"12",35)
     pygame.display.update()
