@@ -41,11 +41,11 @@ random.shuffle(deckImg)
 for i in deckImg[0:12]:  # deal cards
    player.append(i)
 for i in deckImg[13:25]:  # deal cards
-   cpu1.append(i)
+   cpu3.append(i)
 for i in deckImg[26:38]:  # deal cards
    cpu2.append(i)
 for i in deckImg[39:51]:  # deal cards
-   cpu3.append(i)
+   cpu1.append(i)
 
 #function used to create text. args are desired text and fontsize
 def textObject(text,font):
@@ -248,6 +248,7 @@ def game():
 
         playArea()
         order(turn)
+        turn +=1
         #order(start)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
@@ -334,7 +335,7 @@ def testGame():
 
 def face(player, cpu1, cpu2, cpu3, stack, original):
     turn = original+1
-
+    pygame.display.update()
     if stack[-1][4]=='J':
         print("A jack has been played, set one: ")
         x = 1
@@ -350,6 +351,8 @@ def face(player, cpu1, cpu2, cpu3, stack, original):
 
     card=0
     while (card==0):
+        pygame.display.update()
+
         if turn % 4 == 0:
             while x > 0:
                 if player:
